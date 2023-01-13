@@ -83,4 +83,23 @@ public class UserService {
 
         return starredEmails;
     }
+
+    public boolean updateUser(RegisterDTO registerDTO){
+        List<User> users = userRepository.findAll();
+        User updatedUser = null;
+        for(User user : users){
+            if(user.getEmail().equals(registerDTO.getEmail())) {
+                updatedUser = user;
+                userRepository.delete(user);
+            }
+        }
+        updatedUser.setFirstName(registerDTO.getFirstName());
+        updatedUser.setLastName(registerDTO.getLastName());
+        updatedUser.setMobileNumber(registerDTO.getMobileNumber());
+        updatedUser.setDateOfBirth(registerDTO.getDateOfBirth());
+
+        userRepository.save(updatedUser);
+
+        return true;
+    }
 }

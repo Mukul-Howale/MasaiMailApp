@@ -8,10 +8,7 @@ import com.example.masaimailapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class UserController {
     public ResponseEntity registerUser(@RequestBody RegisterDTO registerDTO){
         boolean isCreated = userService.registerUser(registerDTO);
 
-        return isCreated == true ? new ResponseEntity(HttpStatus.CREATED) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        return isCreated ? new ResponseEntity(HttpStatus.CREATED) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     // Login user
@@ -34,7 +31,7 @@ public class UserController {
     public ResponseEntity loginUser(@RequestBody LoginDTO LoginDTO){
         boolean loginIn = userService.loginUser(LoginDTO);
 
-        return loginIn == true ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        return loginIn ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     //Get all mails for a particular user
@@ -51,5 +48,13 @@ public class UserController {
         List<Email> email = userService.getAllStarredMails(emailDTO);
 
         return email != null ? new ResponseEntity(email, HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    //Updating a user
+    @PutMapping("/masaimail/user")
+    public ResponseEntity updateUser(@RequestBody RegisterDTO registerDTO){
+        boolean isUpdated = userService.updateUser(registerDTO);
+
+        return isUpdated ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
