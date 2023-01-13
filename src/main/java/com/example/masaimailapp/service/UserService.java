@@ -1,7 +1,9 @@
 package com.example.masaimailapp.service;
 
+import com.example.masaimailapp.dto.EmailDTO;
 import com.example.masaimailapp.dto.LoginDTO;
 import com.example.masaimailapp.dto.RegisterDTO;
+import com.example.masaimailapp.entity.Email;
 import com.example.masaimailapp.entity.User;
 import com.example.masaimailapp.entity.UserPassword;
 import com.example.masaimailapp.modelmapper.ModelMapperClass;
@@ -48,10 +50,20 @@ public class UserService {
     }
 
     public boolean loginUser(LoginDTO loginDTO){
-        List<UserPassword> userList = userPasswordRepository.findAll();
-        for(UserPassword user : userList){
+        List<UserPassword> users = userPasswordRepository.findAll();
+        for(UserPassword user : users){
             if((user.getEmail().equals(loginDTO.getEmail())) && (user.getPassword().equals(loginDTO.getPassword()))) return true;
         }
         return false;
+    }
+
+    public List<Email> getAllMails(EmailDTO emailDTO){
+        List<User> users = userRepository.findAll();
+        for(User user : users){
+            if(user.getEmail().equals(emailDTO.getEmail())) {
+                return user.getEmails();
+            }
+        }
+        return null;
     }
 }
