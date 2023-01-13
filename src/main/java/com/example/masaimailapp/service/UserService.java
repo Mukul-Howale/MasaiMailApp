@@ -7,6 +7,7 @@ import com.example.masaimailapp.entity.Email;
 import com.example.masaimailapp.entity.User;
 import com.example.masaimailapp.entity.UserPassword;
 import com.example.masaimailapp.exception.IncorrectInputException;
+import com.example.masaimailapp.exception.IncorrectMobileNumberFormat;
 import com.example.masaimailapp.modelmapper.ModelMapperClass;
 import com.example.masaimailapp.repository.UserPasswordRepository;
 import com.example.masaimailapp.repository.UserRepository;
@@ -18,6 +19,7 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,6 +39,11 @@ public class UserService {
             throw new IncorrectInputException("First name should not have numbers or special characters");
         if(registerDTO.getLastName().matches(".*\\d+.*") || registerDTO.getLastName().matches("[A-Za-z0-9 ]*"))
             throw new IncorrectInputException("Last name should not have numbers or special characters");
+        if(registerDTO.getMobileNumber()<10 || registerDTO.getMobileNumber()>10)
+            throw new IncorrectMobileNumberFormat("Mobile number should be 10 digits");
+        if(registerDTO.getDateOfBirth().compareTo(new Date()) > 0)
+            throw new IncorrectInputException("Birth date should not be in future");
+
         SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter
                 .filterOutAllExcept("email","firstName","lastName","mobileNumber","dateOfBirth");
         SimpleFilterProvider filterProvider = new SimpleFilterProvider()

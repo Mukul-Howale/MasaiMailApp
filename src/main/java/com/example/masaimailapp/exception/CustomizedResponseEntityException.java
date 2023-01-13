@@ -30,4 +30,11 @@ public class CustomizedResponseEntityException extends ResponseEntityExceptionHa
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
+    // Handles if the mobile number is not 10 digits
+    @ExceptionHandler(IncorrectMobileNumberFormat.class)
+    public final ResponseEntity handleIncorrectMobileNumberFormat(Exception e, WebRequest webRequest){
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+                e.getMessage(), webRequest.getDescription(false));
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }
