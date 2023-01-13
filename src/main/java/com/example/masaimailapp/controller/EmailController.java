@@ -18,7 +18,6 @@ public class EmailController {
     @PostMapping("/masaimail/mail")
     public ResponseEntity sendEmail(@RequestBody SendEmailDTO sendEmailDTO){
         boolean isSent = emailService.sendEmail(sendEmailDTO);
-
         return isSent ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -26,7 +25,6 @@ public class EmailController {
     @PostMapping("/masaimail/starred/{id}")
     public ResponseEntity starAnEmail(@PathVariable Long id){
         boolean isStarred = emailService.starAnEmail(id);
-
         return isStarred ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -34,7 +32,6 @@ public class EmailController {
     @DeleteMapping("/masaimail/delete/{id}")
     public ResponseEntity deleteEmail(@PathVariable Long id){
         boolean isDeleted = emailService.deleteEmail(id);
-
         return isDeleted ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

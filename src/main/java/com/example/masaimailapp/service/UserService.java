@@ -6,6 +6,7 @@ import com.example.masaimailapp.dto.RegisterDTO;
 import com.example.masaimailapp.entity.Email;
 import com.example.masaimailapp.entity.User;
 import com.example.masaimailapp.entity.UserPassword;
+import com.example.masaimailapp.exception.IncorrectInputException;
 import com.example.masaimailapp.modelmapper.ModelMapperClass;
 import com.example.masaimailapp.repository.UserPasswordRepository;
 import com.example.masaimailapp.repository.UserRepository;
@@ -32,21 +33,19 @@ public class UserService {
     ModelMapperClass modelMapperClass;
 
     public boolean registerUser(RegisterDTO registerDTO){
+        if(registerDTO.getFirstName().matches(".*\\d+.*") || registerDTO.getFirstName().matches("[A-Za-z0-9 ]*"))
+            throw new IncorrectInputException("First name should not have numbers or special characters");
+        if(registerDTO.getLastName().matches(".*\\d+.*") || registerDTO.getLastName().matches("[A-Za-z0-9 ]*"))
+            throw new IncorrectInputException("Last name should not have numbers or special characters");
         SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter
                 .filterOutAllExcept("email","firstName","lastName","mobileNumber","dateOfBirth");
-
         SimpleFilterProvider filterProvider = new SimpleFilterProvider()
                 .addFilter("UserFilter",filter);
-
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(registerDTO);
-
         mappingJacksonValue.setFilters(filterProvider);
-
         User user = modelMapperClass.modelMapper()
                 .map(mappingJacksonValue.getValue(), new TypeToken<User>() {}.getType());
-
         User newUser = userRepository.save(user);
-
         return newUser != null;
     }
 
@@ -80,7 +79,6 @@ public class UserService {
         for(Email email : emails){
             if(email.isStarred()) starredEmails.add((email));
         }
-
         return starredEmails;
     }
 
@@ -96,9 +94,7 @@ public class UserService {
         updatedUser.setLastName(registerDTO.getLastName());
         updatedUser.setMobileNumber(registerDTO.getMobileNumber());
         updatedUser.setDateOfBirth(registerDTO.getDateOfBirth());
-
         userRepository.save(updatedUser);
-
         return true;
     }
 }

@@ -22,7 +22,6 @@ public class UserController {
     @PostMapping ("/masaimail/register")
     public ResponseEntity registerUser(@RequestBody RegisterDTO registerDTO){
         boolean isCreated = userService.registerUser(registerDTO);
-
         return isCreated ? new ResponseEntity(HttpStatus.CREATED) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -30,7 +29,6 @@ public class UserController {
     @PostMapping ("/masaimail/login")
     public ResponseEntity loginUser(@RequestBody LoginDTO LoginDTO){
         boolean loginIn = userService.loginUser(LoginDTO);
-
         return loginIn ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -38,7 +36,6 @@ public class UserController {
     @GetMapping("/masaimail/mail")
     public ResponseEntity getAllMails(@RequestBody EmailDTO emailDTO){
         List<Email> email = userService.getAllMails(emailDTO);
-
         return email != null ? new ResponseEntity(email, HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -46,7 +43,6 @@ public class UserController {
     @GetMapping("/masaimail/starred")
     public ResponseEntity getAllStarredMails(@RequestBody EmailDTO emailDTO){
         List<Email> email = userService.getAllStarredMails(emailDTO);
-
         return email != null ? new ResponseEntity(email, HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -54,7 +50,6 @@ public class UserController {
     @PutMapping("/masaimail/user")
     public ResponseEntity updateUser(@RequestBody RegisterDTO registerDTO){
         boolean isUpdated = userService.updateUser(registerDTO);
-
         return isUpdated ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
