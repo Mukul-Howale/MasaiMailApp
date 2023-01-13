@@ -1,7 +1,9 @@
 package com.example.masaimailapp.controller;
 
+import com.example.masaimailapp.dto.RegisterDTO;
 import com.example.masaimailapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,11 +15,20 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    // Login request
-    @PostMapping pping("/user/getUser")
-    public ResponseEntity getUserDetails(@RequestBody LoginDTO loginDTO){
-        Long userId = userService.getUserDetails(loginDTO);
+    // Register new user
+    @PostMapping ("/masaimail/register")
+    public ResponseEntity getUserDetails(@RequestBody RegisterDTO registerDTO){
+        boolean isCreated = userService.registerUser(registerDTO);
 
-        return new ResponseEntity(userId, HttpStatus.OK);
+        return isCreated == true ? new ResponseEntity(HttpStatus.CREATED) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    // Login user
+    @PostMapping ("/masaimail/login")
+    public ResponseEntity getUserDetails(@RequestBody LoginDTO LoginDTO){
+        boolean isCreated = userService.registerUser(registerDTO);
+
+        return isCreated == true ? new ResponseEntity(HttpStatus.CREATED) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
