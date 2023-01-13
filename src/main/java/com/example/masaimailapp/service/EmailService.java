@@ -31,4 +31,9 @@ public class EmailService {
         emailRepository.save(email);
         return true;
     }
+
+    public boolean deleteEmail(Long id){
+        emailRepository.deleteById(id);
+        return true;
+    }
 }
