@@ -45,4 +45,11 @@ public class UserController {
         return email != null ? new ResponseEntity(email, HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    //Get all starred mails for a particular user
+    @GetMapping("/masaimail/starred")
+    public ResponseEntity getAllStarredMails(@RequestBody EmailDTO emailDTO){
+        List<Email> email = userService.getAllStarredMails(emailDTO);
+
+        return email != null ? new ResponseEntity(email, HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

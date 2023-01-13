@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -65,5 +66,21 @@ public class UserService {
             }
         }
         return null;
+    }
+
+    public List<Email> getAllStarredMails(EmailDTO emailDTO){
+        List<User> users = userRepository.findAll();
+        List<Email> emails = null;
+        List<Email> starredEmails = new ArrayList<>();
+        for(User user : users){
+            if(user.getEmail().equals(emailDTO.getEmail())) {
+                emails = user.getEmails();
+            }
+        }
+        for(Email email : emails){
+            if(email.isStarred()) starredEmails.add((email));
+        }
+
+        return starredEmails;
     }
 }
