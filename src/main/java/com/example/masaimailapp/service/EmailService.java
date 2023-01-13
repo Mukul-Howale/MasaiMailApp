@@ -25,4 +25,10 @@ public class EmailService {
         return true;
     }
 
+    public boolean starAnEmail(Long id){
+        Email email = emailRepository.getReferenceById(id);
+        email.setStarred(true);
+        emailRepository.save(email);
+        return true;
+    }
 }

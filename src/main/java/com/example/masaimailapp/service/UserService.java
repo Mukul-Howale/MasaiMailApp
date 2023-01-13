@@ -90,7 +90,6 @@ public class UserService {
         for(User user : users){
             if(user.getEmail().equals(registerDTO.getEmail())) {
                 updatedUser = user;
-                userRepository.delete(user);
             }
         }
         updatedUser.setFirstName(registerDTO.getFirstName());

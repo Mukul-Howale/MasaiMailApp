@@ -27,7 +27,7 @@ public class EmailController {
 
     // Star an email
     @PostMapping("/masaimail/starred/{id}")
-    public ResponseEntity starAnEmail(@@PathVariable Long id){
+    public ResponseEntity starAnEmail(@PathVariable Long id){
         boolean isStarred = emailService.starAnEmail(id);
 
         return isStarred ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
