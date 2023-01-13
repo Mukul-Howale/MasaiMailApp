@@ -1,5 +1,6 @@
 package com.example.masaimailapp.controller;
 
+import com.example.masaimailapp.dto.LoginDTO;
 import com.example.masaimailapp.dto.RegisterDTO;
 import com.example.masaimailapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,9 @@ public class UserController {
     // Login user
     @PostMapping ("/masaimail/login")
     public ResponseEntity getUserDetails(@RequestBody LoginDTO LoginDTO){
-        boolean isCreated = userService.registerUser(registerDTO);
+        boolean loginIn = userService.loginUser(LoginDTO);
 
-        return isCreated == true ? new ResponseEntity(HttpStatus.CREATED) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        return loginIn == true ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
